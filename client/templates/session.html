@@ -1,0 +1,60 @@
+<template name="sessionTemplate">
+  {{> topbarTemplate}}
+
+  <p></p>
+
+  {{#if ideas_count}}
+    <h3 class="ui center aligned header">Current idea{{s ideas_count}} ({{ideas_count}})</h3>
+    <div id="idea-box" class="ui container" style="opacity: {{#if bulletTime}}.7{{else}}1{{/if}}">
+      <div class="ui segments">
+        {{#each ideas}}
+          {{#with this}}{{> ideaTemplate}}{{/with}}
+        {{/each}}
+      </div>
+    </div>
+  {{else}}
+    <h3 class="ui center aligned header">No current ideas present</h3>
+  {{/if}}
+
+  {{> formTemplate}}
+</template>
+
+<template name="ideaTemplate">
+  <div class="ui segment">
+    <div class="ui red label right floated">
+      {{score}}
+    </div>
+
+    {{name}}
+
+    {{#if canVote}}
+    <div class="ui mini buttons right floated">
+      <div class="ui blue button plus-0" data-content="Indifferent"><i class="meh button icon"></i></div>
+      <div class="or"></div>
+      <div class="ui green button plus-1" data-content="I like it"><i class="thumbs up button icon"></i></div>
+    </div>
+    {{/if}}
+    <div style="clear:both"></div>
+  </div>
+</template>
+
+<template name="formTemplate">
+  <form id="goodIdea">
+    <div class="ui inverted segment">
+      <div class="ui inverted form">
+        <div class="two fields">
+          <div class="twelve wide field">
+            <input type="text" name="idea" maxlength="255" placeholder="Your awesome idea" />
+          </div>
+          <div class="four wide field">
+            <button class="ui animated button" tabindex="0">
+              <div class="visible content">Put your idea in the bowl</div>
+              <div class="hidden content">Do it!</div>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </form>
+</template>
