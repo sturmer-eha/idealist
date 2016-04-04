@@ -1,28 +1,23 @@
 Template.sessionTemplate.helpers({
-  ideas_count: function(){
-    return Ideas.find({ sessionId: Session.get("currSessionId") }).count();
+  ideas_count: function () {
+    return MiniIdeas.find({ sessionId: Session.get("currSessionId") }).count();
   },
-  ideas: function(){
+  ideas: function () {
     var bulletTime = Session.get('bulletTimeActive');
 
-    console.log("ideas!")
-
-    return Ideas.find({ sessionId: Session.get("currSessionId") },
+    return MiniIdeas.find({ sessionId: Session.get("currSessionId") },
             { sort: { score: -1, timestamp: -1 }, reactive: false }).fetch();
   },
-  bulletTime: function(){
-    return false;
-    // return Session.get('bulletTimeActive');
+  bulletTime: function () {
+    return Session.get('bulletTimeActive');
   }
 });
 
 Template.sessionTemplate.events({
   'mouseenter #idea-box': function() {
-    console.log('in');
     Session.set('bulletTimeActive', true);
   },
   'mouseleave #idea-box': function() {
-    console.log('out');
     Session.set('bulletTimeActive', false);
   }
 });
@@ -41,11 +36,17 @@ Template.ideaTemplate.events({
     var ideaId = this._id;
 
     Meteor.call('promoteIdea', ideaId, true);
+
+    // Unfreeze
+    Session.set("bulletTimeActive", false);
   },
   'click .plus-0': function(event, instance) {
     var ideaId = this._id;
 
     Meteor.call('promoteIdea', ideaId, false);
+
+    // Unfreeze
+    Session.set("bulletTimeActive", false);
   }
 });
 
@@ -58,6 +59,9 @@ Template.formTemplate.events({
     Meteor.call("proposeNewIdea", idea, function(error, response){
       if (response) {
         event.currentTarget.idea.value = "";
+
+        // Unfreeze
+        Session.set("bulletTimeActive", false);
       }
     });
   }

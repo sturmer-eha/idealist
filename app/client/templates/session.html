@@ -4,7 +4,10 @@
   <p></p>
 
   {{#if ideas_count}}
-    <h3 class="ui center aligned header">Current idea{{s ideas_count}} ({{ideas_count}})</h3>
+    <h3 class="ui center aligned header">
+      Current idea{{s ideas_count}} ({{ideas_count}})
+      {{#if bulletTime}}<i class="pause icon"></i>{{else}}<i class="refresh icon"></i>{{/if}}
+    </h3>
     <div id="idea-box" class="ui container" style="opacity: {{#if bulletTime}}.7{{else}}1{{/if}}">
       <div class="ui segments">
         {{#each ideas}}
@@ -43,17 +46,16 @@
     <div class="ui inverted segment">
       <div class="ui inverted form">
         <div class="two fields">
-          <div class="twelve wide field">
+          <div class="eleven wide field">
             <input type="text" name="idea" maxlength="255" placeholder="Your awesome idea" />
           </div>
-          <div class="four wide field">
+          <div class="five wide field">
             <button class="ui animated button" tabindex="0">
               <div class="visible content">Put your idea in the bowl</div>
               <div class="hidden content">Do it!</div>
             </button>
           </div>
         </div>
-
       </div>
     </div>
   </form>

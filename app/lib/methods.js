@@ -1,26 +1,24 @@
-// Idealistic methods
-// The joke is getting old
+// Latency compensated methods
 
 Meteor.methods({
-  proposeNewIdea: function(name){
+  proposeNewIdea: function (name) {
     this.unblock();
 
-    if (!Meteor.userId())
-      return throwError("Not logged in");
+    check(name, String);
 
-    if (typeof name != "string")
-      return throwError("Your idea must be a string");
+    if ( !Meteor.userId() )
+      throw new Meteor.Error("Not logged in");
 
     // Trim it
-    name = name.trim().substring(0,255);
+    name = name.trim().substring(0, 255);
 
-    if (name == "")
-      return throwError("Good ideas can't be empty");
+    if ( !name )
+      throw new Meteor.Error("Good ideas can't be empty");
 
     // No duplicates
     var regexp = new RegExp(name, 'i');
-    if (Ideas.findOne({sessionId: null, name: regexp}))
-      return throwError("Already been proposed");
+    if ( Ideas.findOne({sessionId: null, name: regexp}) )
+      throw new Meteor.Error("Already been proposed");
 
     var now = Meteor.isServer ? new Date() : null;
 

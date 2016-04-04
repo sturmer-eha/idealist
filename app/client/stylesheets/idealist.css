@@ -1,0 +1,21 @@
+.ui.menu {
+  margin: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.ui.inverted.segment {
+  margin: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+#keepOut {
+  padding: 40px;
+}
+
+#goodIdea {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
